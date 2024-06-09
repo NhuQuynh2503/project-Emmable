@@ -1,10 +1,10 @@
 <template>
-    <div class="login-wrapper">
-        <div class="login">
-            <div class="login-left">
+    <div class="register-wrapper">
+        <div class="register">
+            <div class="register-left">
                 <img  src="https://static.vecteezy.com/system/resources/previews/005/879/539/non_2x/cloud-computing-modern-flat-concept-for-web-banner-design-man-enters-password-and-login-to-access-cloud-storage-for-uploading-and-processing-files-illustration-with-isolated-people-scene-free-vector.jpg" alt="">
             </div>
-            <div class="login-right">
+            <div class="register-right">
                 <h2>Register</h2>
                 <form action="">
                     <div class="form-group">
@@ -50,7 +50,7 @@
         margin: 0;
         padding: 0;
     }
-    .login-wrapper{
+    .register-wrapper{
         width: 100%;
         height: 100%;
         background: #97959527;
@@ -61,11 +61,12 @@
         left: 0;
         justify-content: center;
         align-items: center;
+        
     }
-    .login{
+    .register{
         width: 800px;
         height: 500px;
-        border: 1px solid rgb(135, 135, 135);
+        border: 1px solid rgb(224, 222, 222);
         display: flex;
         justify-content: space-between;
         border-radius: 10px;
@@ -76,15 +77,15 @@
         color: #000;
         text-align: center;
     }
-    .login .login-left{
+    .register .register-left{
         width: 50%;
     }
-    .login-left img{
+    .register-left img{
         width: 100%;
         height: 100%;
         object-fit: cover;
     }
-    .login .login-right{
+    .register .register-right{
         width: 50%;
         height: 100%;
     }

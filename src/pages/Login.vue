@@ -62,7 +62,7 @@
     .login{
         width: 800px;
         height: 370px;
-        border: 1px solid rgb(135, 135, 135);
+        border: 1px solid rgb(224, 222, 222);
         display: flex;
         justify-content: space-between;
         border-radius: 10px;
