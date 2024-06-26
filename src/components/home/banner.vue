@@ -1,14 +1,14 @@
 <template>
   <div>
     <swiper class="custom-swiper"
-        :slides-per-view="3" 
-        :space-between="3"
+        :slides-per-view="1" 
+        :space-between="1"
         @swiper="onSwiper"
         @slideChange="onSlideChange"
       >
-        <swiper-slide><img src="https://intphcm.com/data/upload/banner-thoi-trang-men.jpg" alt=""></swiper-slide>
-        <swiper-slide><img src="https://intphcm.com/data/upload/banner-thoi-trang-nu-dep.jpg" alt=""></swiper-slide>
-        <swiper-slide><img src="https://bizweb.dktcdn.net/100/443/867/themes/897087/assets/banner_col_1.png?1695987003794" alt=""></swiper-slide>
+        <swiper-slide><img src="https://static.thedevkit.com/2018/01/weekend-sale-banner-1024x267.png" alt=""></swiper-slide>
+        <!-- <swiper-slide><img src="https://intphcm.com/data/upload/banner-thoi-trang-nu-dep.jpg" alt=""></swiper-slide>
+        <swiper-slide><img src="https://bizweb.dktcdn.net/100/443/867/themes/897087/assets/banner_col_1.png?1695987003794" alt=""></swiper-slide> -->
         
     </swiper>
   </div>
@@ -31,7 +31,8 @@ import 'swiper/css';
 
   .custom-swiper .swiper-slide img {
     width: 100%;
-    height:300px;
+    height:320px;
     object-fit: cover;
+    overflow: hidden;
   }
 </style>

@@ -143,6 +143,7 @@ import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+    
     const currentSelected = ref({
         newID: "",
         newTitle: "",
@@ -592,16 +593,11 @@ import 'swiper/css/pagination';
         /* width: calc(120% - 10px);  */
         height: auto;
         border-radius: 10px;
-        margin-top: 20px;
-        border: 1px solid #e4e3e3;
-    }
-    .product{
         width: calc(16% - 10px); 
-        height: auto;
-        border-radius: 10px;
         margin-top: 20px;
-        border: 1px solid #e4e3e3;
+        border: 1px solid #e1e0e0;
     }
+
     .image img{
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;
@@ -646,11 +642,13 @@ import 'swiper/css/pagination';
     .reviews .icon-kidstar{
         color: #ffd18c;
         font-size: 20px;
+        margin-top: 4px;
     }
     .reviews .stars{
         margin-top: 3px;
         margin-right: 10px;
         padding-right: 10px;
+        margin-left: 3px;
         border-right: 1px solid #afaeae;
         color: #7b7a7a;
     }

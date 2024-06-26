@@ -27,105 +27,107 @@
                     <!-- noi dung san pham -->
                 <div class="item-wrapper">
                     <div class="item">
-                    <div class="left">
-                            <div class="image-top">
-                                <img src="https://images.pexels.com/photos/20363394/pexels-photo-20363394/free-photo-of-th-i-trang-b-d-ao-s-mi-ca-v-t.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="">
-                            </div>
-                            <div class="image-bottom">
-                                <img src="https://images.pexels.com/photos/10040216/pexels-photo-10040216.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="">
-                                <img src="https://images.pexels.com/photos/5856083/pexels-photo-5856083.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="">
-                                <img src="https://images.pexels.com/photos/19272484/pexels-photo-19272484/free-photo-of-ng-i-dan-ong-d-ng-d-i-mu-fedora-mau-d.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="">
-                                <img src="https://images.pexels.com/photos/5061274/pexels-photo-5061274.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="">
-                                <img src="https://images.pexels.com/photos/17627753/pexels-photo-17627753/free-photo-of-dan-ong-ao-s-mi-d-ng-chan-dung.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="">
-                            </div>
-                    </div>
-                    <div class="right">
-                            <div class="right-first">
-                                <h2>{{ listDetail.title }}</h2>
-                                <div class="star">
-                                    <Icon class="icon-star" icon="material-symbols:kid-star"></Icon>
-                                    <p class="review">{{ listDetail.star }}</p>
-                                    <p class="sold"> Sold {{ listDetail.sold }}</p>
+                        <div class="left">
+                                <div class="image-top">
+                                    <img src="https://images.pexels.com/photos/20363394/pexels-photo-20363394/free-photo-of-th-i-trang-b-d-ao-s-mi-ca-v-t.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="">
                                 </div>
-                                <div class="priceBefore">${{ listDetail.priceBefore }}</div>
-                                <div class="discount">
-                                    <p class="percent">{{listDetail.percent}}%</p>
-                                    <p class="price">{{ listDetail.price }}</p>
+                                <div class="image-bottom">
+                                    <img src="https://images.pexels.com/photos/10040216/pexels-photo-10040216.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="">
+                                    <img src="https://images.pexels.com/photos/5856083/pexels-photo-5856083.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="">
+                                    <img src="https://images.pexels.com/photos/19272484/pexels-photo-19272484/free-photo-of-ng-i-dan-ong-d-ng-d-i-mu-fedora-mau-d.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="">
+                                    <img src="https://images.pexels.com/photos/5061274/pexels-photo-5061274.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="">
+                                    <img src="https://images.pexels.com/photos/17627753/pexels-photo-17627753/free-photo-of-dan-ong-ao-s-mi-d-ng-chan-dung.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="">
+                                </div>
+                        </div>
+                        <div class="right" >
+                                <div class="right-first">
+                                    <h2>{{ listDetail.title }}</h2>
+                                    <div class="star">
+                                        <Icon class="icon-star" icon="material-symbols:kid-star"></Icon>
+                                        <p class="review">{{ listDetail.star }}</p>
+                                        <p class="sold"> Sold {{ listDetail.sold }}</p>
+                                    </div>
+                                    <div class="priceBefore">${{ listDetail.priceBefore }}</div>
+                                    <div class="discount">
+                                        <p class="percent">{{listDetail.percent}}%</p>
+                                        <p class="price">{{ listDetail.price }}</p>
+                                    </div>
+                                </div>
+                                <div class="right-second">
+                                    <div class="name-color">
+                                        <h4>Color :</h4>
+                                        <p>{{ selectedColor }}</p>
+                                    </div>
+                                    <div class="btn-color">
+                                        <button :class="{style : selectedColor === 'Black'}" class="btn-black" @click="selecColor('Black')">Black</button>
+                                        <button :class="{style : selectedColor === 'Yellow'}" class="btn-yellow" @click="selecColor('Yellow')">Yellow</button>
+                                        <button :class="{style : selectedColor === 'Purple'}" class="btn-purple" @click="selecColor('Purple')">Purple</button>
+                                        <button :class="{style : selectedColor === 'Turquoiser'}" class="btn-turquoiser" @click="selecColor('Turquoiser')">Turquoiser</button>
+                                    </div>
+                                </div>
+                                <div class="right-third">
+                                    <h3>Details</h3>
+                                    <p class="condition">Condition<span>{{ details.condition }}</span></p>
+                                    <p class="unit">Unit weight<span>{{ details.unit }}</span></p>
+                                    <p class="category">Category<span>{{ details.category }}</span></p>
+                                    <p class="storefront">Storefront<span>{{ details.storefront }}</span></p>
+                                    <p class="rombo">{{ details.rombo }}</p>
+                                    <p class="origami">{{ details.origami }}</p>
+                                    <p class="content">{{ details.content }}</p>
+                                </div>
+                        </div>
+                        <!-- chi tiet san pham -->
+                       <div style="width: 250px;">
+                            <div id="detailOrder_wrapper" v-if="isShowDetailOrder">
+                                <div class="detailOrder-child">
+                                    <div class="orderImage">
+                                        <img src="https://images.pexels.com/photos/20363394/pexels-photo-20363394/free-photo-of-th-i-trang-b-d-ao-s-mi-ca-v-t.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="">
+                                        <p>{{ selectedColor }}</p>
+                                    </div>
+                                    <div class="orderContent">
+                                        <p class="inStock">In Stock</p>
+                                        <Icon class="icon-tick" icon="material-symbols:fitbit-check-small"></Icon>
+                                    </div>
+                                </div>
+                                <!-- quantity -->
+                                <div class="product-quantity">
+                                    <h6>Quantity</h6>
+                                    <div class="quantity-controls">
+                                        <input type="number" value="1" min="1" id="quantity">
+                                        <button class="decrease">-</button>
+                                        <button class="increase">+</button>
+                                    </div>
+                                </div>
+                                <!-- subtotal -->
+                                <div class="subtotal">
+                                    <h6>Subtotal</h6>
+                                    <div class="sub-price">
+                                        <p class="subtotalPrice">{{ listDetail.price }}</p>
+                                        <p class="subtotalPriceBefore">${{ listDetail.priceBefore }}</p>
+                                    </div>
+                                </div>
+                                <!-- 2 btn-buyNow -->
+                                <div class="btn-parent">
+                                    <button class="add">
+                                        <Icon class="icon-cart" icon="material-symbols:shopping-cart"></Icon>
+                                        Add To Cart
+                                    </button>
+                                    <button class="buyNow">Buy Now</button>
+                                </div>
+                                <div class="wishlistShare">
+                                    <div class="wishlist">
+                                        <Icon class="heart" icon="ic:baseline-favorite-border"></Icon>
+                                        <p class="contentwish">Wishlist</p>
+                                    </div>
+                                    <div class="share">
+                                        <Icon class="share" icon="ic:baseline-share"></Icon>
+                                        <p class="contentshare">Share</p>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="right-second">
-                                <div class="name-color">
-                                    <h4>Color :</h4>
-                                    <p>{{ selectedColor }}</p>
-                                </div>
-                                <div class="btn-color">
-                                    <button class="btn-black" @click="selecColor('Black')">Black</button>
-                                    <button class="btn-yellow" @click="selecColor('Yellow')">Yellow</button>
-                                    <button class="btn-purple" @click="selecColor('Purple')">Purple</button>
-                                    <button class="btn-turquoiser" @click="selecColor('Turquoiser')">Turquoiser</button>
-                                </div>
-                            </div>
-                            <div class="right-third">
-                                <h3>Details</h3>
-                                <p class="condition">Condition<span>{{ details.condition }}</span></p>
-                                <p class="unit">Unit weight<span>{{ details.unit }}</span></p>
-                                <p class="category">Category<span>{{ details.category }}</span></p>
-                                <p class="storefront">Storefront<span>{{ details.storefront }}</span></p>
-                                <p class="rombo">{{ details.rombo }}</p>
-                                <p class="origami">{{ details.origami }}</p>
-                                <p class="content">{{ details.content }}</p>
-                            </div>
-                    </div>
-                    <!-- chi tiet san pham -->
-                    <div id="detailOrder_wrapper">
-                        <div class="detailOrder-child">
-                            <div class="orderImage">
-                                <img src="https://images.pexels.com/photos/20363394/pexels-photo-20363394/free-photo-of-th-i-trang-b-d-ao-s-mi-ca-v-t.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="">
-                                <p>{{ selectedColor }}</p>
-                            </div>
-                            <div class="orderContent">
-                                <p class="inStock">In Stock</p>
-                                <Icon class="icon-tick" icon="material-symbols:fitbit-check-small"></Icon>
-                            </div>
-                        </div>
-                        <!-- quantity -->
-                        <div class="product-quantity">
-                            <h6>Quantity</h6>
-                            <div class="quantity-controls">
-                                <input type="number" value="1" min="1" id="quantity">
-                                <button class="decrease">-</button>
-                                <button class="increase">+</button>
-                            </div>
-                        </div>
-                        <!-- subtotal -->
-                        <div class="subtotal">
-                            <h6>Subtotal</h6>
-                            <div class="sub-price">
-                                <p class="subtotalPrice">{{ listDetail.price }}</p>
-                                <p class="subtotalPriceBefore">${{ listDetail.priceBefore }}</p>
-                            </div>
-                        </div>
-                        <!-- 2 btn-buyNow -->
-                        <div class="btn-parent">
-                            <button class="add">
-                                <Icon class="icon-cart" icon="material-symbols:shopping-cart"></Icon>
-                                Add To Cart
-                            </button>
-                            <button class="buyNow">Buy Now</button>
-                        </div>
-                        <div class="wishlistShare">
-                            <div class="wishlist">
-                                <Icon class="heart" icon="ic:baseline-favorite-border"></Icon>
-                                <p class="contentwish">Wishlist</p>
-                            </div>
-                            <div class="share">
-                                <Icon class="share" icon="ic:baseline-share"></Icon>
-                                <p class="contentshare">Share</p>
-                            </div>
-                        </div>
+                       </div>
                     </div>
                 </div>
-            </div>
             <div class="rombo-wrapper">
                     <div class="rombo-item">
                         <div class="nameImage">
@@ -260,7 +262,8 @@
                                     </div>
                                     <Icon class="icon-menu" icon="gravity-ui:ellipsis-vertical"></Icon>
                                 </div>
-                                <div class="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur expedita, labore a, eius dolorum delectus atque dolorem, rerum vitae quia necessitatibus non quam sunt porro eveniet placeat sint qui. Aliquid.</div>
+                                <div class="contentComment">Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur expedita, labore a, eius dolorum delectus atque dolorem, rerum vitae quia necessitatibus non quam sunt porro eveniet placeat sint qui. Aliquid.</div>
+
                                 <div class="imageReply">
                                     <img src="https://savani.vn/images/products/2023/08/17/large/ao-so-mi-dai-tay-nam-mls133k3-2-z01-5_1692261841.jpg" alt="">
                                     <img src="https://cdn0918.cdn4s1.com/media/san-pham/ao-so-mi-nam/ao-so-mi-nam-form-rong-vigo-co-v-jbagy-js03-12.jpg" alt="">
@@ -291,7 +294,7 @@
                                     </div>
                                     <Icon class="icon-menu" icon="gravity-ui:ellipsis-vertical"></Icon>
                                 </div>
-                                <div class="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur expedita, labore a, eius dolorum delectus atque dolorem, rerum vitae quia necessitatibus non quam sunt porro eveniet placeat sint qui. Aliquid.</div>
+                                <div class="contentComment">Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur expedita, labore a, eius dolorum delectus atque dolorem, rerum vitae quia necessitatibus non quam sunt porro eveniet placeat sint qui. Aliquid.</div>
                                 <div class="reply-parent">
                                     <div class="personReply">
                                         <Icon class="icon-like" icon="ic:outline-recommend"></Icon>
@@ -318,7 +321,7 @@
                                     </div>
                                     <Icon class="icon-menu" icon="gravity-ui:ellipsis-vertical"></Icon>
                                 </div>
-                                <div class="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur expedita, labore a, eius dolorum delectus atque dolorem, rerum vitae quia necessitatibus non quam sunt porro eveniet placeat sint qui. Aliquid.</div>
+                                <div class="contentComment">Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur expedita, labore a, eius dolorum delectus atque dolorem, rerum vitae quia necessitatibus non quam sunt porro eveniet placeat sint qui. Aliquid.</div>
                                 <div class="imageReply">
                                     <img src="https://savani.vn/images/products/2023/08/17/large/ao-so-mi-dai-tay-nam-mls133k3-2-z01-5_1692261841.jpg" alt="">
                                     <img src="https://cdn0918.cdn4s1.com/media/san-pham/ao-so-mi-nam/ao-so-mi-nam-form-rong-vigo-co-v-jbagy-js03-12.jpg" alt="">
@@ -349,7 +352,7 @@
                                     </div>
                                     <Icon class="icon-menu" icon="gravity-ui:ellipsis-vertical"></Icon>
                                 </div>
-                                <div class="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur expedita, labore a, eius dolorum delectus atque dolorem, rerum vitae quia necessitatibus non quam sunt porro eveniet placeat sint qui. Aliquid.</div>
+                                <div class="contentComment">Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur expedita, labore a, eius dolorum delectus atque dolorem, rerum vitae quia necessitatibus non quam sunt porro eveniet placeat sint qui. Aliquid.</div>
                                 <div class="reply-parent">
                                     <div class="personReply">
                                         <Icon class="icon-like" icon="ic:outline-recommend"></Icon>
@@ -364,8 +367,8 @@
             </div>
                 <!-- chi tiet san pham -->
             
-        </div>
-    </section>
+            </div>
+        </section>
    </div>
 </template>
 <script setup>
@@ -373,7 +376,8 @@ import { ref } from 'vue';
 import axios from 'axios';
 import Header from '@/components/layout/Header.vue';
 import Footer from '@/components/layout/Footer.vue';
-
+    const isShowDetailOrder = ref(false)
+    
     const checkedIds = ref([]);
     const toggleColor = (id) => {
         console.log(id);
@@ -448,9 +452,9 @@ import Footer from '@/components/layout/Footer.vue';
     })
     // color
     const selectedColor = ref("");  // bien luu mau sac da chon
-
     const selecColor = (color) => { // gan mau cho gia tri bien selectedColor
         selectedColor.value = color;
+        isShowDetailOrder.value=true
     }
 
     const listDetail = ref(
@@ -466,6 +470,9 @@ import Footer from '@/components/layout/Footer.vue';
     );
 </script>
 <style scoped>
+    .style{
+        background: #b8b7b7 !important;
+    }
     #productDetail-container{
         background: #fff;
         width: 100%;
@@ -950,6 +957,10 @@ import Footer from '@/components/layout/Footer.vue';
         margin: 10px 10px 10px 10px; /* Combined margin shorthand */
         padding-top: 10px; /* Added padding-bottom to create space inside the border */
     }
+    .contentComment{
+        padding-left: 70px;
+        margin-bottom: 5px;
+    }
     .person-nav .icon-menu{
         font-size: 20px;
         margin-left: 300px;
@@ -1013,7 +1024,7 @@ import Footer from '@/components/layout/Footer.vue';
 
     /* wrapper detail */
     #detailOrder_wrapper{
-        width: 220px;
+        width: 250px;
         height: 350px;
         border: 1px solid #b8b7b7;
         border-radius: 10px;
@@ -1022,14 +1033,12 @@ import Footer from '@/components/layout/Footer.vue';
     .detailOrder-child{
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        margin: 10px 10px 10px 10px;
-        padding-left: 40px;
+        padding-left: 10px;
     }
     .orderImage{
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        width: 140px;
     }
     .orderImage img{
         width: 60px;
@@ -1041,10 +1050,16 @@ import Footer from '@/components/layout/Footer.vue';
         margin-left: 5px;
     }
     .orderContent{
+        /* width: 50px;
+        margin-left: 10px;
         display: flex;
         align-items: center;
         justify-content: space-between;
+        margin-bottom: 50px; */
+        display: flex;
+        align-items: center;
         margin-bottom: 50px;
+        padding-left: 15px;
     }
     .orderContent .icon-tick{
         font-size: 25px;
