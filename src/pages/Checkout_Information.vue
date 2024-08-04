@@ -42,17 +42,9 @@
                 <div class="shipping-wrapper">
                     <h4>Shipping Address</h4>
                     <div class="information-form">
-                        <div class="form-group">
-                            <select name="" id="">
-                                <option value="">TP. Hồ Chí Minh</option>
-                                <option value="">Hà Nội</option>
-                                <option value="">Đà Nẵng</option>
-                                <option value="">Nha Trang</option>
-                                <option value="">Vũng Tàu</option>
-                                <option value="">Lâm Đồng</option>
-                                <option value="">Bình Dương</option>
-                                <option value="">Quảng Trị</option>
-                                <option value="">Huế</option>
+                        <div class="form-group" >
+                            <select name="" id="" v-model="cityId">
+                                <option v-for="item in locations" :key="item.id" :value="item.id">{{ item.name }}</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -65,17 +57,9 @@
                             <input type="text" name="" id="" placeholder="Địa chỉ">
                         </div>
                         <div class="form-group">
-                            <div class="name">
-                                <select name="" id="">
-                                    <option value="">TP. Hồ Chí Minh</option>
-                                    <option value="">Hà Nội</option>
-                                    <option value="">Đà Nẵng</option>
-                                    <option value="">Nha Trang</option>
-                                    <option value="">Vũng Tàu</option>
-                                    <option value="">Lâm Đồng</option>
-                                    <option value="">Bình Dương</option>
-                                    <option value="">Quảng Trị</option>
-                                    <option value="">Huế</option>
+                            <div class="name" >
+                                <select name="" id="" v-model="id">
+                                    <option v-for="item in districts" :key="item.id" :value="item.id">{{ item.name }}</option>
                                 </select>
                                 <input type="text" name="" id="" placeholder="Mã bưu điện">
                             </div>
@@ -153,7 +137,46 @@
 
 </template>
 <script setup>
-import { ref } from 'vue';
+import { ref ,onMounted,watch} from 'vue';
+import { locationCity, locationDistricts } from '@/services/location';
+    const locations = ref([])
+    const districts = ref([])
+    const cityId = ref('')
+    const id = ref('')
+    async function fetchLocations() {
+        try {
+            const response = await locationCity();
+            //console.log("data respores",response.data);
+            locations.value = response.data.data;
+            //console.log("data location",locations.value);
+        } catch (error) {
+            console.error("Lỗi khi lấy thông tin thành phố", error);
+        }
+    }
+    async function fetchDistricts() {
+        try {
+            //console.log("Fetching districts for cityId:", cityId.value);
+            const response = await locationDistricts(cityId.value);
+            //console.log("Response:", response.data);
+            districts.value = response.data.data; // Kiểm tra xem có phải response.data.data hay không
+            //console.log("Districts:", districts.value);
+        } catch (error) {
+            console.error("Lỗi khi lấy thông tin huyện", error);
+        }
+    }
+
+    watch(cityId, (newValue, oldValue) => {
+        // console.log('Giá trị cũ:', oldValue);
+        // console.log('Giá trị mới:', newValue);
+        fetchDistricts();
+    });
+
+    
+    onMounted(() => {
+        fetchLocations();  
+    });
+
+
     const dataTonny = ref([
         {
             id:1,
@@ -178,6 +201,10 @@ import { ref } from 'vue';
         }
     )
 </script>
+
+
+
+
 <style scoped>
     .checkout{
         display: flex;

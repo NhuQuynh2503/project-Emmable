@@ -1,38 +1,8 @@
 <template>
-    <!-- <header id="header">
-        <div class="header-top">
-            <p><span>enjoy an extra 40%</span> off select sales style More details</p>
-            <Icon class="icon-cancel" icon="material-symbols:close-small-outline-rounded"></Icon>
-        </div>
-        <div class="navbar">
-            <div class="logo">
-                <h2>Emmable</h2>
-            </div>
-            <div class="menu">
-                <RouterLink to="" class="a">All Product</RouterLink>
-                <RouterLink to="" class="a">Home Appliance</RouterLink>
-                <RouterLink to="" class="a">Product Kit</RouterLink>
-                <RouterLink to="" class="a">Prome</RouterLink>
-                <RouterLink to="" class="a">Support</RouterLink>
-            </div>
-            <div class="user-action">
-                <div class="search">
-                    <Icon class="icon-search" icon="material-symbols:search-rounded"></Icon>
-                </div>
-                <div class="cart">
-                    <Icon class="icon-cart" icon="material-symbols:shopping-cart"></Icon>
-                    <p>Cart</p>
-                </div>
-                <div class="account">
-                    <Icon class="icon-account" icon="material-symbols:person"></Icon>
-                    <p>Account</p>
-                </div>
-            </div>
-        </div>
-    </header> -->
+
     <header id="header">
         <div class="header">
-            <div class="phone">Call us: (00)1234567</div>
+            <div class="phone">Call us: <span>(00)1234567</span></div>
             <div class="more"> <span>Take 35%</span> off when you spend $99 or more with code <span>"Emmable99"</span> <a href="">More details</a></div>
             <nav>
                 <ul>
@@ -54,7 +24,7 @@
             </div>
            <div class="cart-login">
             <button @click="showCart"><Icon class="icon-cart" icon="clarity:shopping-cart-line"></Icon></button>
-            <button class="btn-login">Login</button>
+            <button class="btn-login"><RouterLink class="no-underline" to="/login">Login</RouterLink></button>
            </div>
         </div>
    
@@ -362,7 +332,7 @@ import Cart from '../home/Cart.vue';
         align-items: center;
     }
     .cart-login button {
-        border: 1px solid #afaeae;
+        border: none;
         border-radius: 10px;
         margin-right: 10px;
         background-color: transparent; 
@@ -387,91 +357,128 @@ import Cart from '../home/Cart.vue';
         cursor: pointer;
         transition: background-color 0.3s, color 0.3s; /* Hiệu ứng chuyển đổi màu nền và màu chữ */
     }
-
-    .cart-login .btn-login:hover {
+    .btn-login .no-underline{
+        text-decoration: none;
+    }
+    .btn-login .no-underline:hover{
+        color: #fff;
+    }
+    .btn-login:hover{
         background-color: rgb(80, 80, 239);
         color: #fff;
     }
 
+    
 
+   /* Cho màn hình nhỏ hơn 576px */
+@media (max-width: 576px) {
+    body {
+        font-size: 16px;
+        margin: 0;
+        padding: 0;
+    }
 
+    #header {
+        height: auto;
+    }
 
+    .header {
+        padding: 10px 0;
+    }
 
+    .header .phone {
+        display: block;
+    }
 
+    .header .more {
+        margin: 0 10px;
+        text-align: left;
+    }
 
-    /* #header{
+    .header ul {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    ul li {
+        font-size: 15px;
+    }
+
+    .nav {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        margin-bottom: 20px;
+        transform: translateX(-20px);
+    }
+
+    #logo {
+        font-size: 15px;
+    }
+
+    .box-search {
+        width: 50%;
+        margin-right: 30px;
+    }
+
+    .box-search input[type="search"] {
+        width: 65%;
+        height: 45px;
+    }
+
+    .btn-login {
+        margin-right: 10px;
+    }
+}
+
+/* Cho màn hình từ 577px đến 768px */
+@media (min-width: 577px) and (max-width: 768px) {
+    body {
+        font-size: 16px;
+        margin: 0;
+        padding: 0;
+    }
+
+    #header {
+        height: auto;
+    }
+
+    .header {
+        padding: 5px 0;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+    }
+    nav{
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        transform: translateX(-20px);
+    }
+    .phone, .more, nav {
         width: 100%;
-        height: 100px;
-        position: fixed;
-        z-index: 100;
-        
+        text-align: left;
     }
-    .header-top{
-        background:#000 ;
-        height: 40px;
-        display: flex;
-        justify-content:center ;
-        color: #fff;
-        align-items: center;
-        position: relative;
-    }
-    .header-top span{
-        text-transform: uppercase;
-    }
-    .header-top .icon-cancel{
-        font-size: 40px;
-        position: absolute;
-        right: 8%;
-        cursor: pointer;
-    }
-    .navbar{
-        display: flex;
-        justify-content: space-between;
-        background: #e4e4e4;
-        padding: 10px 150px;
-    }
-    .navbar .logo h2{
-        font-weight: bold;
-        color: #000;
-        font-size: 25px;
-    }
-    .menu{
-        display: flex;
-        gap: 30px;
-        margin: 10px 0;
-    }
-    .menu a{
-        text-decoration: none;
-        color: #000;
-        margin-top: 3px;
-    }
-    .user-action{
-        display: flex;
-        justify-content: space-between;
-        gap: 30px;
-        align-items: center;
-    }
-    .icon-search,.icon-account,.icon-cart{
-        font-size: 30px;
-        color: #808080;
-    }
-    .cart{
-        display: flex;
-        margin-bottom: 5px;
-    }
-    .cart p{
-        margin-top: 5px;
-    }
-    .account{
-        display: flex;
-        margin-bottom: 5px;
-    }
-    .account p{
-        margin-top: 5px;
-    } */
 
+    nav ul {
+        justify-content: flex-end;
+        width: 100%;
+        display: flex;
+    }
 
+    nav ul li {
+        display: inline-block;
+        margin-right: 20px;
+    }
 
+    .logo {
+        margin-left: 15px;
+    }
+
+    .box-search {
+        width: 50%;
+    }
+}
 
    
 </style>

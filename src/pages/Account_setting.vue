@@ -298,5 +298,38 @@
         color: #007BFF;
         margin-top: 7px;
     }
-    
+    @media (max-width: 576px){
+        body{
+            font-size: 16px;
+        }
+        .setting{
+            display: block;
+        }
+        .setting .left{
+            width: 300px;
+        }
+        .setting .right{
+            width: 300px;
+            margin-top: 20px;
+            height: auto;
+        }
+    }
+    /* @media (max-width: 768px){
+        body{
+            font-size: 16px;
+        }
+        .setting{
+            display: flex;
+            justify-content: space-between;
+        }
+        .setting .left{
+            width: 300px;
+        }
+        .setting .right{
+            width: 300px;
+            margin-top: 5px;
+            height: auto;
+            margin-left: 40px;
+        }
+    } */
 </style>

@@ -1,3 +1,27 @@
+<script setup>
+import { ref } from 'vue';
+import { loginApi } from '@/services/auth';
+import { useRouter } from 'vue-router';
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
+const email = ref("")
+const password = ref("")
+
+const router = useRouter()
+// async await la gi
+async function onLogin() {
+    try {
+        await loginApi(email.value, password.value)
+        toast.success("Đăng nhập thành công!", { position: "top-right",autoClose: 700000});
+        router.push("/")
+    } catch (error) {
+        toast.error("Đăng nhập thất bại!", { position: "top-right",autoClose: 700000 });
+        console.log("login sai roi")
+    
+    }
+}
+
+</script>
 <template>
     <div class="login-wrapper">
         <div class="login">
@@ -6,21 +30,21 @@
             </div>
             <div class="login-right">
                 <h2>Login</h2>
-                <form action="">
+                <form @submit.prevent="onLogin">
                     <div class="form-group">
                         <label for="">Email</label>
-                        <input type="email" name="" id="" required>
+                        <input type="email" v-model="email" name="" id="" required>
                     </div>
                     <div class="form-group">
                         <label for="">Password</label>
-                        <input type="password" name="" id="" required>
+                        <input type="password" v-model="password" name="" id="" required>
                     </div>
                     <div class="form-group-check">
                         <input type="checkbox" name="" id="">
                         <p>Remember Me</p>
-                        <p class="right">Forgot password ?<a href="">Click here</a></p>
+                        <p class="right">Forgot password ?<RouterLink class="click" to="/forgotpassword">Click here</RouterLink></p>
                     </div>
-                    <button>Login</button>
+                    <button type="submit">Login</button>
                     
                     <div class="icon">
                         <Icon class="icon-facebook" icon="entypo-social:facebook"></Icon>
@@ -28,15 +52,16 @@
                         <Icon class="icon-google" icon="f7:logo-googleplus"></Icon>
                         <Icon class="icon-linkedin" icon="entypo-social:linkedin-with-circle"></Icon>
                     </div>
+                    <div class="register">
+                        <p>Bạn đã có tài khoản? <RouterLink class="btn-register" to="/register">Register</RouterLink></p>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
 
 </template>
-<script setup>
 
-</script>
 <style scoped>
     *{
         margin: 0;
@@ -60,8 +85,8 @@
         align-items: center;
     }
     .login{
-        width: 800px;
-        height: 370px;
+        width: 820px;
+        height: 420px;
         border: 1px solid rgb(224, 222, 222);
         display: flex;
         justify-content: space-between;
@@ -114,6 +139,7 @@
         background: rgb(61, 61, 201);
         color: #fff;
         border: none;
+        cursor: pointer;
         font-size: 18px;
     }
     p{
@@ -133,4 +159,20 @@
         font-size: 30px;
         margin: 5px;
     }
+    .register{
+        text-align: center;
+    }
+    .btn-register{
+        text-decoration: none;
+        font-weight: 600;
+    }
+    .click{
+        text-decoration: none;
+        margin-left: 3px;
+        font-weight: 600;
+    }
+
+
+    
 </style>
+

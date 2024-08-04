@@ -13,7 +13,7 @@ const route = useRoute()
 import { useRouter } from 'vue-router';
 const router = useRouter()
     const layout = computed(() => {
-        if(route.path === '/login' || route.path === '/register'){
+        if (route.path === '/login' || route.path === '/register' || route.path === '/resetpassword' || route.path === '/forgotpassword') {
             return UnAuthLayout;
         }
         else{

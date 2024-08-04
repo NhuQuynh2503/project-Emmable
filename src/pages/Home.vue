@@ -2,50 +2,53 @@
     <div>
         <banner/>
         <section id="flash-sale">
-      <div class="flash-sale-child">
-        <div class="header">
-          <div class="sale">
-            <h2>Flash Sale</h2>
-            <div class="hour">
-              <p class="endsin">Ends in</p>
-              <p class="second">1:10:34</p>
+            <div class="flash-sale-child">
+                <div class="header">
+                <div class="sale">
+                    <h2>Flash Sale</h2>
+                    <div class="hour">
+                    <p class="endsin">Ends in</p>
+                    <p class="second">1:10:34</p>
+                    </div>
+                </div>
+                <a href="">See More</a>
+                </div>
+                <swiper class="swiper" :slides-per-view="5" :space-between="5" @swiper="onSwiper" @slideChange="onSlideChange">
+                    <swiper-slide  v-for="item in dataProducts" :key="item.id">
+                        <div class="box">
+                        <div class="image">
+                            <img :src="item.thumbnails" alt="">
+                        </div>
+                        <div class="content">
+                            <h5>{{ item.name }}</h5>
+                            <p class="description">{{ item.description }}</p>
+                            <p class="priceAfter">
+                                ${{ (item.discount === 0 ? item.price : (item.price * item.discount / 100)).toFixed(2) }}
+                            </p>
+                            <div class="discount">
+                            <div class="percent">{{ item.discount }}%</div>
+                            <div class="price">${{ item.price }}</div>
+                            </div>
+                            <div class="location">
+                            <Icon class="icon-location" icon="material-symbols:location-on"></Icon>
+                            <p>{{ item.location }}</p>
+                            </div>
+                            <div>
+                            <div class="review">
+                                <Icon class="icon-star" icon="material-symbols:star-rate-rounded"></Icon>
+                                <p class="numberstar">{{ currentSelected.newStar }}</p>
+                                <div class="sold">Sold {{ item.sold }}</div>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                    </swiper-slide>
+                </swiper>
             </div>
-          </div>
-          <a href="">See More</a>
-        </div>
-        <swiper class="swiper" :slides-per-view="5" :space-between="5" @swiper="onSwiper" @slideChange="onSlideChange">
-          <swiper-slide  v-for="item in data" :key="item.id">
-            <div class="box">
-              <div class="image">
-                <img :src="item.image" alt="">
-              </div>
-              <div class="content">
-                <h5>{{ item.title }}</h5>
-                <p class="priceAfter">${{ (item.price * item.discount / 100).toFixed(2) }}</p>
-                <div class="discount">
-                  <div class="percent">{{ item.discount }}%</div>
-                  <div class="price">${{ item.price }}</div>
-                </div>
-                <div class="location">
-                  <Icon class="icon-location" icon="material-symbols:location-on"></Icon>
-                  <p>{{ item.location }}</p>
-                </div>
-                <div>
-                  <div class="review">
-                    <Icon class="icon-star" icon="material-symbols:star-rate-rounded"></Icon>
-                    <p class="numberstar">{{ currentSelected.newStar }}</p>
-                    <div class="sold">Sold {{ item.sold }}</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </swiper-slide>
-        </swiper>
-      </div>
         </section>
         <section id="official-store">
             <div class="head">
-            <div class="check"> 
+                <div class="check"> 
                     <Icon class="icon-check" icon="mdi:check-bookmark"></Icon>
                     <h2 class="official">Official Store</h2>
                 </div>
@@ -97,22 +100,31 @@
         <section id="popular-categories">
         <h2>Popular Categories</h2>
         <div class="popular-wrapper">
-            <div class="popular" v-for="item in popular">
-                <img :src="item.img" alt="">
-                <p>{{ item.content }}</p>
-            </div>
+            <swiper class="swiper" :slides-per-view="5" :space-between="5" @swiper="onSwiper" @slideChange="onSlideChange">
+                <swiper-slide v-for="item in dataCategories" :key="item.id">
+                    <RouterLink :to="'/categories/' + item.id">
+                        <div class="popular" >
+                            <img :src="item.thumbnail" alt="">
+                            <p>{{ item.name }}</p>
+                        </div>
+                    </RouterLink>
+                </swiper-slide>
+            </swiper>
         </div>
         </section>
         <section id="product">
             <h2>Product you may like</h2>
             <div class="product-wrapper">
-                <div class="product" v-for="item in data" :key="item.id">
+                <div class="product" v-for="item in dataProducts" :key="item.id">
                     <div class="image">
-                        <img :src="item.image" alt="">
+                        <img :src="item.thumbnails" alt="">
                     </div>
                     <div class="content">
-                        <h5>{{ item.title }}</h5>
-                        <div class="price-after">${{ (item.price*item.discount)/100}}</div>
+                        <h5>{{ item.name }}</h5>
+                        <p class="description">{{ item.description }}</p>
+                        <p class="priceAfter">
+                            ${{ (item.discount === 0 ? item.price : (item.price * item.discount / 100)).toFixed(2) }}
+                        </p>
                         <div class="discount">
                             <p class="cent">{{ item.discount }}%</p>
                             <p class="price-before">${{ item.price }}</p>
@@ -136,13 +148,52 @@
 import banner from '@/components/home/banner.vue';
 import productItem from '@/components/product/productItem.vue';
 import Product from './Product.vue';
-import { ref} from 'vue';  
+import { ref,onMounted} from 'vue';  
 import axios from 'axios';
-import { onMounted } from 'vue';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import { products,categories,categoriesId } from '@/services/products';
+    const dataProducts = ref([])
+    async function useProducts() {
+        try {
+            const pageNumber = 1; // Số trang muốn lấy dữ liệu
+            const response = await products(pageNumber);
+            // console.log("Dữ liệu từ API:", response.data)
+            // Xử lý dữ liệu ở đây (ví dụ: gán vào state của Vue)
+            dataProducts.value = response.data.data;
+            // console.log("Dữ liệu dataProducts", dataProducts.value);
+             
+        } catch (error) {
+            console.error("Xử lý lỗi:", error);
+            // Xử lý lỗi ở đây (ví dụ: hiển thị thông báo cho người dùng)
+        }
+    }
+
+    onMounted(() => {
+        useProducts();
+        
+    })
+
+    //categories
+    const dataCategories = ref([])
+    async function useCategories() {
+        try {
+            const response = await categories();
+            //console.log("du lieu res cate",response.data); 
+            dataCategories.value = response.data.data;
+            //console.log("du lieu res dataCategories",dataCategories.value);
+        } catch (error) {
+            console.error("Xử lý lỗi:", error);
+            // Xử lý lỗi ở đây (ví dụ: hiển thị thông báo cho người dùng)
+        }
+    }
+    useCategories();
+
+
+    
+
     
     const currentSelected = ref({
         newID: "",
@@ -166,9 +217,9 @@ import 'swiper/css/pagination';
         });
     };
       
-    onMounted(() => {
-        getData();
-    });
+    // onMounted(() => {
+    //     getData();
+    // });
     const popular = ref([
         {
             img : "https://icons.iconarchive.com/icons/mattahan/umicons/256/Games-icon.png",
@@ -279,11 +330,12 @@ import 'swiper/css/pagination';
     .header a {
         text-decoration: none;
         font-size: 15px;
-        margin-top: 10px;
+        margin-top: 20px;
     }
     
     .sale {
         display: flex;
+        margin-top: 20px;
     }
     
     .hour {
@@ -323,16 +375,21 @@ import 'swiper/css/pagination';
         overflow: hidden;
         border-radius: 10px;
         background: #fff;
+        margin-bottom: 10px;
     }
     
     .image {
-        width: 100%;
-        height: auto;
+        flex: 1;
+        overflow: hidden;
+        display: flex;
+        align-items: center; /* Thêm để hình ảnh được căn giữa theo chiều dọc */
+        justify-content: center; /* Thêm để hình ảnh được căn giữa theo chiều ngang */
     }
     
     .image img {
         width: 100%;
         height: auto;
+        object-fit: cover;
     }
     
     .content {
@@ -340,14 +397,21 @@ import 'swiper/css/pagination';
     }
     
     .content h5 {
-        font-size: 18px;
+        font-size: 14px;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
         color: #5e5d5d;
         margin-bottom: 5px;
     }
-    
+    .content .description{
+        font-size: 14px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        color: #5e5d5d;
+        margin-bottom: 5px;
+    }
     .content .priceAfter {
         font-size: 22px;
         color: #4e4e4e;
@@ -503,19 +567,20 @@ import 'swiper/css/pagination';
     .img-container {
         display: flex;
         justify-content: space-between;
+        gap: 10px;
     }
     .img_item_1 img {
         height: 500px;
         width: 420px;
-        border-radius: 10px;
+        
         object-fit: cover;
     }
     .img_item_2 .item_1 img,
     .img_item_2 .item_2 img,
     .img_item_3 .item_3 img,
     .img_item_3 .item_4 img {
-        width: 420px;
-        height: 245px;
+        width: 370px;
+        height: 243px;
         border-radius: 10px;
         object-fit: cover;
     }
@@ -534,46 +599,69 @@ import 'swiper/css/pagination';
     }
 
     /* popular */
-    #popular-categories{
-        margin-bottom: 20px;
+    #popular-categories {
+    margin-bottom: 20px;
     }
-    #popular-categories h2{
+
+    #popular-categories h2 {
         color: #181818;
         font-weight: bold;
         font-size: 25px;
-       
     }
-    .popular-wrapper{
+
+    .popular-wrapper {
         width: 100%;
-        height: 200px;
+        height: auto;
         margin-top: 20px;
         display: flex;
         justify-content: space-between;
+        overflow-x: auto;
+        padding-bottom: 10px;
+        padding-bottom: 10px; /* Khoảng cách dưới của phần tử con */
     }
-    .popular-wrapper .popular{
-        width: 200px;
-        height: 100%;
-        border: 1px solid black;
-        padding: 0 10px;
-        border-radius: 10px;
+
+    .popular-wrapper .swiper-slide {
+        width: 80px;
+        height: auto;
+        margin-right: 5px;
+    }
+
+    .popular {
+        width: 100%;
+        height: auto;
         border: 1px solid #d8d8d8;
-    }
-    .popular img{
-        width: 70px;
-        height: 70px;
-        object-fit: cover;
+        border-radius: 10px;
         overflow: hidden;
-        margin: 40px 50px;
-    }
-    .popular p{
-        font-size: 18px;
         text-align: center;
-        margin-top: -20px;
+        padding: 10px;
+        box-sizing: border-box;
+    }
+
+    .popular img {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 50%;
+        margin: 0 auto 10px;
+        min-width: 80px;
+    }
+
+    .popular p {
+        font-size: 16px;
+        margin: 0;
+    }
+
+    /* CSS cho RouterLink */
+    .popular-wrapper a {
+        display: block; /* Đảm bảo RouterLink bao phủ toàn bộ vùng bấm */
+        text-decoration: none; /* Loại bỏ gạch chân */
+        color: inherit; /* Đảm bảo màu sắc chữ không thay đổi */
     }
 
     /* product */
     #product{
         margin-bottom: 20px;
+        overflow: hidden;
     }
     #product h2{
         color: #181818;
@@ -657,4 +745,9 @@ import 'swiper/css/pagination';
        color: #7b7a7a;
     }
     
-</style>
+    @media (min-width: 567px){
+        
+    }
+
+</style> 
+

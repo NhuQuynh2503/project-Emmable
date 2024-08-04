@@ -6,30 +6,33 @@
             </div>
             <div class="register-right">
                 <h2>Register</h2>
-                <form action="">
+                <form @submit.prevent="onRegister" action="">
                     <div class="form-group">
                         <label for="">First Name</label>
-                        <input type="text" name="" id="" required>
+                        <input type="text" v-model="name" name="" id="" required>
                     </div>
                     <div class="form-group">
                         <label for="">Email</label>
-                        <input type="email" name="" id="" required>
+                        <input type="email" v-model="email" name="" id="" required>
                     </div>
                     <div class="form-group">
                         <label for="">Password</label>
-                        <input type="password" name="" id="" required>
+                        <input type="password" v-model="password" name="" id="" required>
                     </div>
                     <div class="form-group">
                         <label for="">Confirm Password</label>
-                        <input type="password" name="" id="" required>
+                        <input type="password" v-model="confirm_password" name="" id="" required>
                     </div>
-                    <button>Register</button>
+                    <button class="btn-register">Register</button>
                     <p>Fast Signup With Your Favourite Social Profile</p>
                     <div class="icon">
                         <Icon class="icon-facebook" icon="entypo-social:facebook"></Icon>
                         <Icon class="icon-twitter" icon="entypo-social:twitter-with-circle"></Icon>
                         <Icon class="icon-google" icon="f7:logo-googleplus"></Icon>
                         <Icon class="icon-linkedin" icon="entypo-social:linkedin-with-circle"></Icon>
+                    </div>
+                    <div class="login">
+                        <p>Bạn có tài khoản? <RouterLink class="btn-login" to="/login">Login</RouterLink> now</p>
                     </div>
                 </form>
             </div>
@@ -38,7 +41,39 @@
 
 </template>
 <script setup>
-
+import { ref } from 'vue';
+import { registerApi } from '@/services/auth';
+import { useRouter } from 'vue-router';
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
+const router = useRouter()
+const email = ref('')
+const password = ref('')
+const confirm_password = ref('')
+const name = ref('')
+// async function onRegister(){
+//     if (password.value !== confirm_password.value) {
+//         toast.error("Passwords do not match!", { autoClose: 1000 });
+//         return;
+//     }
+//     try {
+//         await registerApi()
+//         router.push("/")
+//     } catch (error) {
+//         console.log("register sai roi")
+//     }
+// }
+async function onRegister() {
+    try {
+        await registerApi(name.value,email.value,password.value,confirm_password.value)
+        toast.success("Đăng nhập thành công!", { position: "top-right",autoClose: 7000});
+        router.push("/")
+       
+    } catch (error) {
+        toast.error("Đăng nhập thất bại!", { position: "top-right",autoClose: 7000 });
+        console.log("register sai roi")
+    }
+}
 </script>
 <style scoped>
     *{
@@ -65,7 +100,7 @@
     }
     .register{
         width: 800px;
-        height: 500px;
+        height: 530px;
         border: 1px solid rgb(224, 222, 222);
         display: flex;
         justify-content: space-between;
@@ -126,5 +161,16 @@
     .icon .icon-facebook,.icon-twitter,.icon-google,.icon-linkedin{
         font-size: 30px;
         margin: 5px;
+    }
+    .btn-register{
+        cursor: pointer;
+        font-size: 20px;
+    }
+    .login{
+        text-align: center;
+    }
+    .btn-login{
+        text-decoration: none;
+        font-weight: 600;
     }
 </style>

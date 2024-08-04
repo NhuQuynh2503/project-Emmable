@@ -103,7 +103,6 @@ const images = ref([
         background: #e4e4e4;
         width: 100%;
         height: auto;
-  
         z-index: 100;
     }
     .footer-container{
@@ -180,4 +179,59 @@ const images = ref([
         padding-right: 28px;
         color: #868484;
     }
+
+
+
+    @media (max-width: 576px) {
+    #footer{
+        width: 100%;
+        z-index: 100;
+    }
+    .footer-container {
+        padding: 10px 0; /* Giảm padding xuống để thu gọn */
+    }
+    .footer-wrapper {
+        display: flex; /* Chuyển sang định dạng dọc */
+        align-items: flex-start; /* Căn trái các item trong wrapper */
+    }
+    .item-emmable {
+        width: 40%; /* Chiếm toàn bộ chiều rộng */
+        text-align: left; /* Căn lề trái cho nội dung */
+    }
+    .item {
+        width: 60%; /* Chiếm toàn bộ chiều rộng */
+        margin-top: 10px; /* Tăng khoảng cách giữa các mục */
+        
+    }
+    .item a{
+        padding: 10px 0;
+    }
+    .box {
+        flex-direction: column; /* Chuyển sang định dạng dọc */
+        align-items: flex-start; /* Căn trái các box trong cột */
+    }
+    .box-content p {
+        padding-right: 0; /* Xóa padding phải */
+        text-align: left; /* Căn lề trái cho nội dung */
+    }
+    .footer-bottom{
+        padding: 10px 0;
+    }
+    .footer-bottom .box{
+        flex-direction: column; /* Chiều ngang cho box */
+        align-items: center;
+    }
+}
+@media (max-width: 768px){
+    .footer-container{
+        padding: 10px 40px;
+    }
+    .footer-bottom{
+        padding: 10px 0;
+    }
+    .footer-bottom .box{
+        flex-direction: column; /* Chiều ngang cho box */
+        align-items: center;
+    }
+}
 </style>
