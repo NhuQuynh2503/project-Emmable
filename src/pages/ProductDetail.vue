@@ -520,11 +520,11 @@ import Footer from '@/components/layout/Footer.vue';
     .left .image-bottom{
         display: flex;
         flex-wrap: wrap;
-        gap: 12px;
+        gap: 14.5px;
     }
     .left .image-bottom img{
-        width: 70px;
-        height: 90px;
+        width: 60px;
+        height: 70px;
         object-fit: cover;
         border-radius: 10px;
         
@@ -551,6 +551,9 @@ import Footer from '@/components/layout/Footer.vue';
     .star p {
         margin: 0 10px 0 0;
         font-size: 14px;
+    }
+    .right{
+        margin-left: 50px;
     }
     .right-first{
         border-bottom: 1px solid #b8b7b7;

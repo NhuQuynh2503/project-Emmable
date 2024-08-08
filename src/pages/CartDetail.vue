@@ -172,6 +172,7 @@ import { ref } from 'vue';
     .cartdetail .left{
         width: 700px;
         height: auto;
+        margin-right: 30px;
     }
     .left .heading h3{
         font-size: 25px;
@@ -293,6 +294,7 @@ import { ref } from 'vue';
     .cartdetail .right{
         width: 500px;
         height: auto;
+        margin-left: 5px;
     }
     .form{
         border: 1px solid rgb(206, 206, 206);
