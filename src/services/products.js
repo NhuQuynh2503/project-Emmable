@@ -12,3 +12,8 @@ export function categories(){
 export function categoriesId(idCategori,page){
     return axios.get(`${BASE_URL}/products/categories/${idCategori}/products?page=${page}`)
 }
+
+
+export function productId(idProduct){
+    return axios.get(`${BASE_URL}/products/${idProduct}`)
+}

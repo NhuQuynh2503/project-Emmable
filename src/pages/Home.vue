@@ -23,7 +23,8 @@
                             <h5>{{ item.name }}</h5>
                             <p class="description">{{ item.description }}</p>
                             <p class="priceAfter">
-                                ${{ (item.discount === 0 ? item.price : (item.price * item.discount / 100)).toFixed(2) }}
+                                ${{ (item.discount === 0 ? item.price : 
+                                    (item.price * (100 - item.discount) / 100)).toFixed(2) }}
                             </p>
                             <div class="discount">
                             <div class="percent">{{ item.discount }}%</div>
@@ -123,7 +124,8 @@
                         <h5>{{ item.name }}</h5>
                         <p class="description">{{ item.description }}</p>
                         <p class="priceAfter">
-                            ${{ (item.discount === 0 ? item.price : (item.price * item.discount / 100)).toFixed(2) }}
+                            ${{ (item.discount === 0 ? item.price : 
+                                    (item.price * (100 - item.discount) / 100)).toFixed(2) }}
                         </p>
                         <div class="discount">
                             <p class="cent">{{ item.discount }}%</p>

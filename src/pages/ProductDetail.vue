@@ -1,7 +1,7 @@
 <template>
    <div>
         <section id="productDetail-container">
-            <div class="productDetail-child">
+            <div class="productDetail-child" v-if="productDetailId">
                 <!-- tieu de -->
                 <div class="navbar">
                         <div class="nav-item">
@@ -29,28 +29,29 @@
                     <div class="item">
                         <div class="left">
                                 <div class="image-top">
-                                    <img src="https://images.pexels.com/photos/20363394/pexels-photo-20363394/free-photo-of-th-i-trang-b-d-ao-s-mi-ca-v-t.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="">
+                                    <img :src="productDetailId.thumbnails" alt="">
                                 </div>
                                 <div class="image-bottom">
-                                    <img src="https://images.pexels.com/photos/10040216/pexels-photo-10040216.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="">
-                                    <img src="https://images.pexels.com/photos/5856083/pexels-photo-5856083.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="">
-                                    <img src="https://images.pexels.com/photos/19272484/pexels-photo-19272484/free-photo-of-ng-i-dan-ong-d-ng-d-i-mu-fedora-mau-d.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="">
-                                    <img src="https://images.pexels.com/photos/5061274/pexels-photo-5061274.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="">
-                                    <img src="https://images.pexels.com/photos/17627753/pexels-photo-17627753/free-photo-of-dan-ong-ao-s-mi-d-ng-chan-dung.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="">
+                                    <img src="" alt="">
+                                    <img src="" alt="">
+                                    <img src="" alt="">
+                                    <img src="" alt="">
+                                    <img src="" alt="">
                                 </div>
                         </div>
                         <div class="right" >
                                 <div class="right-first">
-                                    <h2>{{ listDetail.title }}</h2>
+                                    <h2>{{ productDetailId.name }}</h2>
                                     <div class="star">
                                         <Icon class="icon-star" icon="material-symbols:kid-star"></Icon>
                                         <p class="review">{{ listDetail.star }}</p>
                                         <p class="sold"> Sold {{ listDetail.sold }}</p>
                                     </div>
-                                    <div class="priceBefore">${{ listDetail.priceBefore }}</div>
+                                    <div class="priceBefore">${{ (productDetailId.discount === 0 ? productDetailId.price : 
+                                    (productDetailId.price * (100 - productDetailId.discount) / 100)).toFixed(2) }}</div>
                                     <div class="discount">
-                                        <p class="percent">{{listDetail.percent}}%</p>
-                                        <p class="price">{{ listDetail.price }}</p>
+                                        <p class="percent">{{productDetailId.discount}}%</p>
+                                        <p class="price">${{ productDetailId.price }}</p>
                                     </div>
                                 </div>
                                 <div class="right-second">
@@ -69,9 +70,9 @@
                                     <h3>Details</h3>
                                     <p class="condition">Condition<span>{{ details.condition }}</span></p>
                                     <p class="unit">Unit weight<span>{{ details.unit }}</span></p>
-                                    <p class="category">Category<span>{{ details.category }}</span></p>
+                                    <p class="category">Category<span>{{ productDetailId.category_id }}</span></p>
                                     <p class="storefront">Storefront<span>{{ details.storefront }}</span></p>
-                                    <p class="rombo">{{ details.rombo }}</p>
+                                    <p class="rombo">{{ productDetailId.description }}</p>
                                     <p class="origami">{{ details.origami }}</p>
                                     <p class="content">{{ details.content }}</p>
                                 </div>
@@ -81,7 +82,7 @@
                             <div id="detailOrder_wrapper" v-if="isShowDetailOrder">
                                 <div class="detailOrder-child">
                                     <div class="orderImage">
-                                        <img src="https://images.pexels.com/photos/20363394/pexels-photo-20363394/free-photo-of-th-i-trang-b-d-ao-s-mi-ca-v-t.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="">
+                                        <img :src="productDetailId.thumbnails" alt="">
                                         <p>{{ selectedColor }}</p>
                                     </div>
                                     <div class="orderContent">
@@ -102,8 +103,9 @@
                                 <div class="subtotal">
                                     <h6>Subtotal</h6>
                                     <div class="sub-price">
-                                        <p class="subtotalPrice">{{ listDetail.price }}</p>
-                                        <p class="subtotalPriceBefore">${{ listDetail.priceBefore }}</p>
+                                        <p class="subtotalPrice">${{ productDetailId.price }}</p>
+                                        <p class="subtotalPriceBefore">${{ (productDetailId.discount === 0 ? productDetailId.price : 
+                                    (productDetailId.price * (100 - productDetailId.discount) / 100)).toFixed(2) }}</p>
                                     </div>
                                 </div>
                                 <!-- 2 btn-buyNow -->
@@ -372,10 +374,12 @@
    </div>
 </template>
 <script setup>
-import { ref } from 'vue';
+import { ref,onMounted, watch } from 'vue';
+import { useRoute } from 'vue-router';
 import axios from 'axios';
 import Header from '@/components/layout/Header.vue';
 import Footer from '@/components/layout/Footer.vue';
+import { productId } from '@/services/products';
     const isShowDetailOrder = ref(false)
     
     const checkedIds = ref([]);
@@ -387,6 +391,16 @@ import Footer from '@/components/layout/Footer.vue';
             checkedIds.value.push(id);
         }
     };
+    const image = ref(
+        {
+            image_1: 'https://images.pexels.com/photos/20363394/pexels-photo-20363394/free-photo-of-th-i-trang-b-d-ao-s-mi-ca-v-t.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+            image_2: 'https://images.pexels.com/photos/10040216/pexels-photo-10040216.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+            image_3: 'https://images.pexels.com/photos/5856083/pexels-photo-5856083.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+            image_4: 'https://images.pexels.com/photos/19272484/pexels-photo-19272484/free-photo-of-ng-i-dan-ong-d-ng-d-i-mu-fedora-mau-d.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+            image_5: 'https://images.pexels.com/photos/5061274/pexels-photo-5061274.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+            image_6: 'https://images.pexels.com/photos/17627753/pexels-photo-17627753/free-photo-of-dan-ong-ao-s-mi-d-ng-chan-dung.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
+        }
+    )
     const rating = ref([
         {
             id:1,
@@ -468,6 +482,29 @@ import Footer from '@/components/layout/Footer.vue';
             price:"Rp45.00"
         }
     );
+
+    const productDetailId = ref('')
+    const route = useRoute()
+    const fetchProductDetail = async(idProduct) => {
+        try {
+            const response = await productId(idProduct);
+            console.log("log ra response id tao coi",response);
+            
+            productDetailId.value = response.data.data;
+            console.log("log ra product detail id tao coi",productDetailId.value);
+        } catch (error) {
+            console.log('Failed to fetch product detail:', error);
+            
+        }
+    }
+    onMounted(() => {
+        const id = route.params.id;
+        fetchProductDetail(id);
+    })
+    watch(() => route.params.id, (newId) =>{
+        fetchProductDetail(newId);
+    })
+    
 </script>
 <style scoped>
     .style{
@@ -553,7 +590,7 @@ import Footer from '@/components/layout/Footer.vue';
         font-size: 14px;
     }
     .right{
-        margin-left: 50px;
+        margin-left: 30px;
     }
     .right-first{
         border-bottom: 1px solid #b8b7b7;
@@ -1031,6 +1068,7 @@ import Footer from '@/components/layout/Footer.vue';
         height: 350px;
         border: 1px solid #b8b7b7;
         border-radius: 10px;
+        margin-left: 10px;
     }
     /* chi tiet san pham */
     .detailOrder-child{
